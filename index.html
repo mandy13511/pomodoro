@@ -1,0 +1,240 @@
+<!DOCTYPE html>
+<html lang="en" >
+<head>
+  <meta charset="UTF-8">
+  <title>Pomodoro</title>
+  <link rel="stylesheet" href="./style.css">
+</head>
+<body>
+<!-- partial:index.partial.html -->
+<head>
+  <link href="https://fonts.googleapis.com/icon?family=Material+Icons"
+      rel="stylesheet">
+</head>
+<body>
+  <div class = "container">
+    <div id = "panel">
+      <transition name = "fade">
+        <div class = "panel" v-if = "showPanel"> 
+      <div class = "panel-header-rect" v-bind:class="{ right: tabIsRight }"></div>
+      <div class = "panel-header-button" v-on:click = "changeTab('to_do_list')" v-bind:class="{ active: tabIsLeft }">
+        To-do list
+      </div>
+      <div class = "panel-header-button right" v-on:click = "changeTab('dashboard')" v-bind:class="{ active: tabIsRight }">
+        Dashboard
+      </div>
+      <div id = "panel-to-do" class = "panel-content"  v-show = "showTODOLIST">
+        <div class = "panel-week-content">
+          <div class = "panel-date-button" v-on:click = "changeActiveDate(0)" v-bind:class="{ active: activeDay == '0'}" >
+            <div class = "button-content">
+              {{historyData[0].date}}<br>SUN
+            </div>
+          </div>
+          <div class = "panel-date-button" v-on:click = "changeActiveDate(1)" v-bind:class="{ active: activeDay == '1'}">
+            <div class = "button-content">
+              {{historyData[1].date}}<br>MON
+            </div>
+          </div>
+          <div class = "panel-date-button" v-on:click = "changeActiveDate(2)" v-bind:class="{ active: activeDay == '2'}">
+            <div class = "button-content">
+              {{historyData[2].date}}<br>TUE
+            </div>
+          </div>
+          <div class = "panel-date-button" v-on:click = "changeActiveDate(3)" v-bind:class="{ active: activeDay == '3'}">
+            <div class = "button-content">
+              {{historyData[3].date}}<br>WED
+            </div>
+          </div>
+          <div class = "panel-date-button" v-on:click = "changeActiveDate(4)" v-bind:class="{ active: activeDay == '4'}">
+            <div class = "button-content">
+              {{historyData[4].date}}<br>THU
+            </div>
+          </div>
+          <div class = "panel-date-button" v-on:click = "changeActiveDate(5)" v-bind:class="{ active: activeDay == '5'}">
+            <div class = "button-content">
+             {{historyData[5].date}}<br>FRI
+            </div>
+          </div>
+          <div class = "panel-date-button" v-on:click = "changeActiveDate(6)" v-bind:class="{ active: activeDay == '6'}">
+            <div class = "button-content">
+              {{historyData[6].date}}<br>SAT
+            </div>
+          </div>
+        </div>
+        <div class = "panel-todo-content">
+          <ul>
+            <li v-for="item in historyData[activeDay].task" v-bind:class="{ active: isSelected == item}" @click = "isSelected = item">
+              <button v-bind:class="{ active: item.complete }" @click = "changeTaskStatus(item.taskName)"></button>
+              <a v-if = "item.complete" class = "line-through">{{ item.taskName }}</a>
+              <a v-else>{{ item.taskName }}</a>
+            </li>
+            <li><button class = "add">+</button><input type = "text" placeholder = "Add new task"  v-model="taskName" v-on:keyup.enter = "addTask"></input></li>
+          </ul>
+        </div>
+      </div>
+      <div id = "panel-dash-board" class = "panel-content"  v-show = "showDASHBOARD">
+        <div class = "panel-calculate-content">
+          <div class = "left">
+            <div class = "font-bold up" v-cloak>{{tomatoSum[activeDay]}}</div>
+            <div class = "down">TODAY</div>
+          </div>
+          <div class = "right">
+            <div class = "font-bold up" v-cloak>{{weekTomatoSum}}</div>
+            <div class = "down" v-cloak>{{historyData[0].date}}~{{historyData[6].date}}</div>
+          </div>
+        </div>
+        <div class = "panel-statistic-content">
+          <div id = "day1" class = "statistic-flex">
+            <transition name="up">
+              <div v-show = "tabIsRight" class = "straight">
+                <div class = "font-bold" v-bind:style="{ height: 31 + 150 -tomatoSum[0]*180/15+ 'px'}" v-cloak>{{tomatoSum[0]}}</div>
+              </div>
+            </transition>
+          </div>
+          <div id = "day2" class = "statistic-flex">
+            <transition name="up">
+              <div v-show = "tabIsRight" class = "straight">
+                <div class = "font-bold" v-bind:style="{ height: 31 + 150 -tomatoSum[1]*180/15+ 'px'}" v-cloak>{{tomatoSum[1]}}</div>
+              </div>
+            </transition>
+          </div>
+         
+          <div id = "day3" class = "statistic-flex">
+            <transition name="up">
+              <div v-show = "tabIsRight" class = "straight">
+                <div class = "font-bold" v-bind:style="{ height: 31 + 150 -tomatoSum[2]*180/15+ 'px'}" v-cloak>{{tomatoSum[2]}}</div>
+              </div>
+            </transition>
+          </div>
+          
+          <div id = "day4" class = "statistic-flex">
+            <transition name="up">
+              <div v-show = "tabIsRight" class = "straight">
+                <div class = "font-bold" v-bind:style="{ height: 31 + 150 -tomatoSum[3]*180/15+ 'px'}" v-cloak>{{tomatoSum[3]}}</div>
+              </div>
+            </transition>
+          </div>
+          <div id = "day5" class = "statistic-flex">
+            <transition name="up">
+              <div v-show = "tabIsRight" class = "straight">
+                <div class = "font-bold" v-bind:style="{ height: 31 + 150 -tomatoSum[4]*180/15+ 'px'}" v-cloak>{{tomatoSum[4]}}</div>
+              </div>
+            </transition>
+          </div>
+          <div id = "day6" class = "statistic-flex">
+            <transition name="up">
+              <div v-show = "tabIsRight" class = "straight">
+                <div class = "font-bold" v-bind:style="{ height: 31 + 150 -tomatoSum[5]*180/15+ 'px'}" v-cloak>{{tomatoSum[5]}}</div>
+              </div>
+            </transition>
+          </div>
+          <div id = "day7" class = "statistic-flex">
+            <transition name="up">
+              <div v-show = "tabIsRight" class = "straight">
+                <div class = "font-bold" v-bind:style="{ height: 31 + 150 -tomatoSum[6]*180/15+ 'px'}" v-cloak>{{tomatoSum[6]}}</div>
+              </div>
+            </transition>
+          </div>
+        </div>
+        <div class = "panel-statistic-date">
+          <div class = "panel-statistic-date-detail">
+            <div v-cloak>{{historyData[0].date}}</div>
+            <div>MON</div>
+          </div>
+          <div class = "panel-statistic-date-detail">
+            <div v-cloak>{{historyData[1].date}}</div>
+            <div>TUE</div>
+          </div>
+          <div class = "panel-statistic-date-detail">
+            <div v-cloak>{{historyData[2].date}}</div>
+            <div>WED</div>
+          </div>
+          <div class = "panel-statistic-date-detail">
+            <div v-cloak>{{historyData[3].date}}</div>
+            <div>THU</div>
+          </div>
+          <div class = "panel-statistic-date-detail">
+            <div v-cloak>{{historyData[4].date}}</div>
+            <div>FRI</div>
+          </div>
+          <div class = "panel-statistic-date-detail">
+            <div v-cloak>{{historyData[5].date}}</div>
+            <div>SAT</div>
+          </div>
+          <div class = "panel-statistic-date-detail">
+            <div v-cloak>{{historyData[6].date}}</div>
+            <div>SUN</div>
+          </div>
+        </div>
+      </div>
+  
+      <div class = "finish-text">Finished</div>
+      <div class = "finish-area">
+        <i v-for = "n in tomatoSum[activeDay]" class="material-icons">favorite</i>
+      </div>
+    </div>
+      </transition>
+    </div>
+    <div id = "clock">
+      <div class = "circle">
+        <div class = "timer" v-cloak>{{countMinutes}}:{{countSeconds}}</div>
+      </div>
+    
+      <button class = "button above-circle" @click = "changeAlarmStatus">
+        <i class="material-icons" v-cloak>{{alarm}}</i>
+      </button>
+    
+      <button v-if = "isPlaying == true" class = "button left-circle" v-on:click = "stopCounDown">
+        <i class="material-icons">pause</i>
+      </button>
+      <button v-else class = "button left-circle" v-on:click = "timeCountDown">
+        <i class="material-icons">play_arrow</i>
+      </button>
+   
+      <button class = "button under-circle" v-on:click = "reset">
+        <i class="material-icons">replay</i>
+      </button>
+      <transition name = "rotate">
+        <div v-if = "showClock" class = "minute-rect">
+          <div class = "line-rect minute-30" @click = "changeTargetMinutes('30')">
+        <div class = "minute" v-bind:class="{ active: targetMinutes == '30' }">30</div>
+        <div class = "line"></div>
+      </div>
+          <div class = "line-rect minute-25" @click = "changeTargetMinutes('25')">
+        <div class = "minute" v-bind:class="{ active: targetMinutes == '25' }">25</div>
+        <div class = "line"></div>
+      </div>
+          <div class = "line-rect minute-20" @click = "changeTargetMinutes('20')">
+        <div class = "minute" v-bind:class="{ active: targetMinutes == '20' }">20</div>
+        <div class = "line"></div>
+      </div>
+          <div class = "line-rect minute-15" @click = "changeTargetMinutes('15')">
+        <div class = "minute" v-bind:class="{ active: targetMinutes == '15' }">15</div>
+        <div class = "line"></div>
+      </div>
+          <div class = "line-rect minute-10" @click = "changeTargetMinutes('10')">
+        <div class = "minute" v-bind:class="{ active: targetMinutes == '10' }">10</div>
+        <div class = "line"></div>
+      </div>
+          <div class = "line-rect minute-5" @click = "changeTargetMinutes('05')">
+        <div class = "minute" v-bind:class="{ active: targetMinutes == '05' }">5</div>
+        <div class = "line"></div>
+      </div>
+          <div class = "line-rect minute-0" @click = "changeTargetMinutes('00')">
+        <div class = "minute" v-bind:class="{ active: targetMinutes == '00' }">0</div>
+        <div class = "line"></div>
+      </div>
+        </div>
+      </transition>
+    </div>
+    <div class = "license">UI Designed By 
+        <a href="https://challenge.thef2e.com/user/1875?schedule=2512#works-2512">杯杯</a>   
+    </div>
+  </div>
+</body>
+<!-- partial -->
+  <script src='https://cdnjs.cloudflare.com/ajax/libs/vue/2.6.10/vue.min.js'></script>
+<script  src="./script.js"></script>
+
+</body>
+</html>
