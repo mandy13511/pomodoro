@@ -1,5 +1,17 @@
 # Pomodoro
- _A Pen created at CodePen.io. Original URL: [https://codepen.io/mandy13511/pen/ydmyNj](https://codepen.io/mandy13511/pen/ydmyNj).
+![Pomodoro screenshot](./src/screenshot.jpg)
 
- Tomato Clock
-use web storage to save the history data 
+[What is Pomodoro?](https://en.wikipedia.org/wiki/Pomodoro_Technique)
+
+### Features
+* manage your tasks on to-do list panel
+* overview your history data on dashboard
+* customizable timer lengths
+* use web storage to save the history data
+
+### Technologies
+* Vue.js
+* Sass
+
+### UI Designed
+[杯杯](https://challenge.thef2e.com/user/1875?schedule=2512#works-2512)
