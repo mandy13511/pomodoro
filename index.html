@@ -15,7 +15,7 @@
   <div class = "container">
     <div id = "panel">
       <transition name = "fade">
-        <div class = "panel" v-if = "showPanel"> 
+        <div class = "panel" v-if = "showPanel">
       <div class = "panel-header-rect" v-bind:class="{ right: tabIsRight }"></div>
       <div class = "panel-header-button" v-on:click = "changeTab('to_do_list')" v-bind:class="{ active: tabIsLeft }">
         To-do list
@@ -98,7 +98,7 @@
               </div>
             </transition>
           </div>
-         
+
           <div id = "day3" class = "statistic-flex">
             <transition name="up">
               <div v-show = "tabIsRight" class = "straight">
@@ -106,7 +106,7 @@
               </div>
             </transition>
           </div>
-          
+
           <div id = "day4" class = "statistic-flex">
             <transition name="up">
               <div v-show = "tabIsRight" class = "straight">
@@ -167,7 +167,7 @@
           </div>
         </div>
       </div>
-  
+
       <div class = "finish-text">Finished</div>
       <div class = "finish-area">
         <i v-for = "n in tomatoSum[activeDay]" class="material-icons">favorite</i>
@@ -179,18 +179,18 @@
       <div class = "circle">
         <div class = "timer" v-cloak>{{countMinutes}}:{{countSeconds}}</div>
       </div>
-    
+
       <button class = "button above-circle" @click = "changeAlarmStatus">
         <i class="material-icons" v-cloak>{{alarm}}</i>
       </button>
-    
+
       <button v-if = "isPlaying == true" class = "button left-circle" v-on:click = "stopCounDown">
         <i class="material-icons">pause</i>
       </button>
       <button v-else class = "button left-circle" v-on:click = "timeCountDown">
         <i class="material-icons">play_arrow</i>
       </button>
-   
+
       <button class = "button under-circle" v-on:click = "reset">
         <i class="material-icons">replay</i>
       </button>
@@ -227,8 +227,11 @@
         </div>
       </transition>
     </div>
-    <div class = "license">UI Designed By 
-        <a href="https://challenge.thef2e.com/user/1875?schedule=2512#works-2512">杯杯</a>   
+    <div class = "license">UI Designed By
+        <a href="https://challenge.thef2e.com/user/1875?schedule=2512#works-2512">杯杯</a>
+    </div>
+    <div class = "license">Github:
+        <a href="https://github.com/mandy13511/pomodoro/">https://github.com/mandy13511/pomodoro/</a>   
     </div>
   </div>
 </body>
