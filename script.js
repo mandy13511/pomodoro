@@ -142,6 +142,7 @@ var vueClock = new Vue({
             m--;
             s = 59;
             m < 10 ? my.countMinutes = '0' + m : my.countMinutes = '' + m;
+            s < 10 ? my.countSeconds = '0' + s : my.countSeconds = '' + s;
           }
           else if (m == 0 && s==0){
             my.stopCounDown();
@@ -159,6 +160,7 @@ var vueClock = new Vue({
           }
           else{
             s--;
+            m < 10 ? my.countMinutes = '0' + m : my.countMinutes = '' + m;
             s < 10 ? my.countSeconds = '0' + s : my.countSeconds = '' + s;
           }
 
