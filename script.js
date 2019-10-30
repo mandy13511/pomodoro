@@ -28,7 +28,7 @@ var vuePanel = new Vue({
       this.activeDay =  this.currentDay;
       //get the date og the first day of this week
       var date = new Date();
-      date.setDate(date.getDate() - this.currentDay); //get the date of Sunday of current week 
+      date.setDate(date.getDate() - this.currentDay); //get the date of Sunday of current week
       var startDay = date.getDate();
       var startMonth = date.getMonth()+1;
       backup = JSON.parse(localStorage.getItem('historyData'));
@@ -36,7 +36,7 @@ var vuePanel = new Vue({
         this.historyData = JSON.parse(JSON.stringify(backup));
       }
       else{
-        for (var i = 0; i < 7; i++) { 
+        for (var i = 0; i < 7; i++) {
           var tempMonth = date.getMonth()+1;
           var tempDate = date.getDate();
           this.historyData.push({date: tempMonth +'/' + tempDate, task: []});
@@ -52,7 +52,7 @@ var vuePanel = new Vue({
           this.showDASHBOARD = false;
           this.tabIsRight = false;
           this.tabIsLeft = true;
-          
+
         }
         else{
           this.showTODOLIST = false;
@@ -94,10 +94,10 @@ var vuePanel = new Vue({
         else{
           this.historyData[this.activeDay].task[selectedIndex].complete = true;
         }
-        localStorage.setItem('historyData', JSON.stringify(this.historyData)); 
+        localStorage.setItem('historyData', JSON.stringify(this.historyData));
       }
     }
-    
+
 });
 
 var vueClock = new Vue({
@@ -124,7 +124,10 @@ var vueClock = new Vue({
       this.countSeconds = '00';
     },
     reset(){
-      this.countMinutes = this.targetMinutes;
+      alert("reset");
+      alert(this.targetMinutes);
+      let target = this.targetMinutes;
+      this.countMinutes = target;
       this.countSeconds = '00';
     },
     timeCountDown(){
@@ -138,11 +141,12 @@ var vueClock = new Vue({
           if (m != 0 && s == 0){
             m--;
             s = 59;
+            m < 10 ? my.countMinutes = '0' + m : my.countMinutes = '' + m;
           }
           else if (m == 0 && s==0){
             my.stopCounDown();
             if (this.alarm == 'notifications'){
-              snd.play(); 
+              snd.play();
             }
             else{
               alert('Stop timing');
@@ -151,13 +155,13 @@ var vueClock = new Vue({
             vuePanel.historyData[vuePanel.activeDay].task[selectedIndex].tomatoNum += 1
             localStorage.setItem('historyData', JSON.stringify(vuePanel.historyData));
             vuePanel.updateTomatoSum();
+            my.reset();
           }
           else{
             s--;
+            s < 10 ? my.countSeconds = '0' + s : my.countSeconds = '' + s;
           }
-          m < 10 ? my.countMinutes = '0' + m : my.countMinutes = '' + m;
-          s < 10 ? my.countSeconds = '0' + s : my.countSeconds = '' + s; 
-         
+
         },1000);
       }
       else{
